@@ -5,29 +5,42 @@ print("Hello WOrld")
 totoResultsHistory = pd.read_csv("toto_results.csv")
 
 def ExtractWinningNumbers(totoResultsData):
-    sortedWinningNumbers = []
+    winningNumbersList = []
 
-    i=0
+    i = 0
     while i < totoResultsData.shape[0]:
     #while i <= 3:
-        winningNumbersList = []
+        winningNumber = []
         for n in range(2, 9):
-            winningNumbersList.append(totoResultsData.loc[i].iat[n])
-        sortedWinningNumbers.append(sorted(winningNumbersList))
+            winningNumber.append(totoResultsData.loc[i].iat[n])
+        winningNumbersList.append(set(winningNumber))
         i += 1
 
-    return sortedWinningNumbers
+    return winningNumbersList
 
 def CountWinningNumberMatches(winningNumbersData, inputNumbers):
     i = 0
     for winningNumbers in winningNumbersData:
-        if np.array_equal(winningNumbers, inputNumbers):
+        if inputNumbers.issubset(winningNumbers):
             i += 1
     
     return i
 
+def CheckWinningNumberMatch(winningNumber, inputNumber):
+    failMatchCount = 0
+    for i in range(0, len(inputNumber)):
+        for j in range(0, len(winningNumber)):
+            print(str(inputNumber[i]) + ": " + str(winningNumber[j]))
+            if inputNumber[i] != winningNumber[j]:
+                failMatchCount += 1
+            else:
+                break
+        if failMatchCount > 1:
+            break
+
+    return failMatchCount <= 1
 
 winningNumbers = ExtractWinningNumbers(totoResultsHistory)
-numbersToMatch = [2, 9, 10, 43, 45, 46, 13]
-count = CountWinningNumberMatches(winningNumbers, sorted(numbersToMatch))
+numbersToMatch = {2, 9, 10, 43, 45, 46}
+count = CountWinningNumberMatches(winningNumbers, numbersToMatch)
 print("Number of Matches: " + str(count))
