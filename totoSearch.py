@@ -43,6 +43,7 @@ def CheckWinningNumberMatch(winningNumber, inputNumber):
 # If winning number of 7 were to be split into 6 combinations, how many would match in the history of winning numbers?
 def CountMatchesForCombinationsInHistory(winningNumbersData, amountToMatchFilter=7):
     print("Matches in history more than " + str(amountToMatchFilter) + " times: ")
+    allMatchesSet = set()
     for number in winningNumbersData:
         combinationsOfNumber = list(combinations(number, 6))
         count = 0
@@ -50,7 +51,21 @@ def CountMatchesForCombinationsInHistory(winningNumbersData, amountToMatchFilter
         for combinationNumber in combinationsOfNumber:
             count += CountWinningNumberMatches(winningNumbersData, set(combinationNumber))
 
-        if count > amountToMatchFilter: print(str(sorted(number)) + ": " + str(count))
+        if count > amountToMatchFilter: 
+            sortedNumber = sorted(number)
+            print(str(sortedNumber) + ": " + str(count))
+            allMatchesSet.update(set(sortedNumber))
+    print("")
+    print("Collated numbers: " + str(allMatchesSet))
+    noMatchSet = set()
+    i = 1
+    for x in allMatchesSet:
+        while(x != i):
+            noMatchSet.add(i)
+            i += 1
+        i += 1
+    print("")
+    print("Remaining numbers: " + str(noMatchSet))
     print("")
 
 # If you bought more than 6 numbers (ie System 7 and above), how many would've matched in history?
