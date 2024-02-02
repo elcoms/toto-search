@@ -50,7 +50,7 @@ def CountMatchesForCombinationsInHistory(winningNumbersData, amountToMatchFilter
         for combinationNumber in combinationsOfNumber:
             count += CountWinningNumberMatches(winningNumbersData, set(combinationNumber))
 
-        if count > amountToMatchFilter: print(str(number) + ": " + str(count))
+        if count > amountToMatchFilter: print(str(sorted(number)) + ": " + str(count))
     print("")
 
 # If you bought more than 6 numbers (ie System 7 and above), how many would've matched in history?
@@ -60,12 +60,14 @@ def CountMatchesForCombinations(winningNumbersData, inputNumber):
 
     for combinationNumber in combinationsOfNumber:
         count = CountWinningNumberMatches(winningNumbersData, set(combinationNumber))
-        print(str(combinationNumber) + ": " + str(count))
+        print(str(sorted(combinationNumber)) + ": " + str(count))
     print("")
 
 
 winningNumbers = ExtractWinningNumbers(totoResultsHistory)
-numbersToMatch = {2, 9, 10, 43, 45, 46, 13}
+numbersToMatch = input("Enter your numbers (separated by space): ")
+numbersToMatch = set(numbersToMatch.split(' '))
+
 count = CountWinningNumberMatches(winningNumbers, numbersToMatch)
 print("Number of Matches: " + str(count))
 
