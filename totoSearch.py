@@ -70,7 +70,7 @@ def CountMatchesForCombinationsInHistory(winningNumbersData, amountToMatchFilter
 
 # If you bought more than 6 numbers (ie System 7 and above), how many would've matched in history?
 def CountMatchesForCombinations(winningNumbersData, inputNumber):
-    print("Number of Matches for " + str(inputNumber) + ": ")
+    print("Number of Matches for " + str(inputNumber))
     combinationsOfNumber = list(combinations(inputNumber, 6))
 
     for combinationNumber in combinationsOfNumber:
@@ -80,11 +80,39 @@ def CountMatchesForCombinations(winningNumbersData, inputNumber):
 
 
 winningNumbers = ExtractWinningNumbers(totoResultsHistory)
-numbersToMatch = input("Enter your numbers (separated by space): ")
-numbersToMatch = set(numbersToMatch.split(' '))
 
-count = CountWinningNumberMatches(winningNumbers, numbersToMatch)
-print("Number of Matches: " + str(count))
+# MENU
+choice = 'W'
+while (choice != 'L'):
+    # Menu Options
+    print("Options")
+    print("1. Search matches")
+    print("2. View repeated winning draws in history")
+    print("L. to exit")
+    choice = input("Input: ")
 
-CountMatchesForCombinationsInHistory(winningNumbers)
-CountMatchesForCombinations(winningNumbers, numbersToMatch)
+    match choice:
+        case '1':
+            # Input
+            inputString = input("Enter your numbers (separated by space): ")
+            inputString = inputString.split(' ')
+
+            # Convert to int set for subset comparison
+            numbersToMatch = set()
+            for number in inputString:
+                numbersToMatch.add(int(number))
+            
+            # Search count
+            count = CountWinningNumberMatches(winningNumbers, numbersToMatch)
+            print("Number of Matches: " + str(count))
+            print()
+            CountMatchesForCombinationsInHistory(winningNumbers)
+            CountMatchesForCombinations(winningNumbers, numbersToMatch)
+        
+        case 'L':
+            print("Goodbye.")
+        case _:
+            print("Please enter a valid input.")
+        
+        
+        
