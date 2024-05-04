@@ -113,6 +113,3 @@ while (choice != 'L'):
             print("Goodbye.")
         case _:
             print("Please enter a valid input.")
-        
-        
-        
