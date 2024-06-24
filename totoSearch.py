@@ -12,7 +12,7 @@ def ExtractWinningNumbers(totoResultsData):
     #while i <= 3:
         winningNumber = []
         for n in range(2, 9):
-            winningNumber.append(totoResultsData.loc[i].iat[n])
+            winningNumber.append(totoResultsData.loc[i].iat[n].item())
         winningNumbersList.append(set(winningNumber))
         i += 1
 
@@ -53,10 +53,10 @@ def CountMatchesForCombinationsInHistory(winningNumbersData, amountToMatchFilter
 
         if count > amountToMatchFilter: 
             sortedNumber = sorted(number)
-            print(str(sortedNumber) + ": " + str(count))
+            print(f"{sortedNumber}: {count}")
             allMatchesSet.update(set(sortedNumber))
     print("")
-    print("Collated numbers: " + str(allMatchesSet))
+    print(f"Collated numbers: {allMatchesSet}")
     noMatchSet = set()
     i = 1
     for x in allMatchesSet:
@@ -83,6 +83,7 @@ winningNumbers = ExtractWinningNumbers(totoResultsHistory)
 
 # MENU
 choice = 'W'
+
 while (choice != 'L'):
     # Menu Options
     print("Options")
